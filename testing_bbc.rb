@@ -30,3 +30,23 @@ wait.until {button.click}
 
 # Select the News button
 # driver.find_element(:id => "responsive-news").click
+
+
+require 'selenium-webdriver'
+
+driver = Selenium::WebDriver.for :chrome
+wait = Selenium::WebDriver::Wait.new(timeout: 10)
+driver.get 'https://www.bbc.co.uk'
+
+your_account_login = driver.find_element(:id => 'idcta-link')
+your_account_login.click
+
+wait.until {/Sign out/.match(driver.page_source)}
+
+username = driver.find_element(:id => 'username-input')
+password = driver.find_element(:id => 'password-input')
+
+username.send_keys "test"
+password.send_keys "test"
+
+wait.until {driver.page_source.match(/Sign out/)}
